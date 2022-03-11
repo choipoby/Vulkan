@@ -12,22 +12,14 @@
 #include <string.h>
 #include <optional>
 
+#include "Common.hpp"
+
 class HelloTriangleApplication
 {
 public:
     void run();
 
 private:
-    struct QueueFamilyIndices
-    {
-        // std::optional is a wrapper that contains no value until you assign something to it.
-        std::optional<uint32_t> graphicsFamily;
-        bool isComplete()
-        {
-            return graphicsFamily.has_value();
-        }
-    };
-
     void initWindow();
 
     void initVulkan();
@@ -35,6 +27,8 @@ private:
     void pickPhysicalDevice();
 
     bool isDeviceSuitable(VkPhysicalDevice device);
+
+    bool checkDeviceExtensionSupport(VkPhysicalDevice device);
 
     QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
@@ -48,8 +42,39 @@ private:
 
     bool checkValidationLayerSupport();
 
+    void createSurface();
+
+    std::vector<const char *> getRequiredExtensions();
+
+    void printExtensionInfo();
+
+    // swap chain
+
+    SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+
+    VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR> &availableFormats);
+
+    VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);
+
+    VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+
+    void createSwapChain();
+
+    // Swap chain is a queue of images
+    VkSwapchainKHR swapChain;
+
+    // These are images in the swap chain
+    std::vector<VkImage> swapChainImages;
+
+    VkFormat swapChainImageFormat;
+
+    VkExtent2D swapChainExtent;
+
     // window
     GLFWwindow *window;
+
+    // surface
+    VkSurfaceKHR surface;
 
     // vulkan instance
     VkInstance instance;
@@ -61,6 +86,12 @@ private:
     VkDevice device{VK_NULL_HANDLE};
 
     VkQueue graphicsQueue{VK_NULL_HANDLE};
+    VkQueue presentQueue{VK_NULL_HANDLE};
+
+    static const uint32_t WIDTH{800};
+    static const uint32_t HEIGHT{600};
+    inline static const std::vector<const char *> validationLayers{"VK_LAYER_LUNARG_standard_validation"};
+    inline static const std::vector<const char *> deviceExtensions{VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 };
 
 #endif

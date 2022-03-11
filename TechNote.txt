@@ -1,0 +1,9 @@
+// Properties
+
+1. device property
+VkPhysicalDeviceProperties deviceProperties;
+
+2. device feature
+VkPhysicalDeviceFeatures deviceFeatures;
+
+3. device extension

@@ -17,6 +17,7 @@ LIBS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 INCLUDES =
 
 SRCS = main.cpp HelloTriangleApplication.cpp
+#SRCS = main.cpp
 
 # define the c, cpp object files to specify corresponding .o files 
 #
