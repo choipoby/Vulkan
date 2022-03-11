@@ -60,6 +60,14 @@ private:
 
     void createSwapChain();
 
+    void createImageViews();
+
+    /*
+     *******************
+     * member variables
+     *******************
+     */
+
     // Swap chain is a queue of images
     VkSwapchainKHR swapChain;
 
@@ -69,6 +77,12 @@ private:
     VkFormat swapChainImageFormat;
 
     VkExtent2D swapChainExtent;
+
+    // To use any VkImage, including those in the swap chain, in the render pipeline
+    // we have to create a VkImageView object.
+    // VkImageView describes how to access the image and which part of the image to access,
+    // for example if it should be treated as a 2D texture depth texture without any mipmapping levels.
+    std::vector<VkImageView> swapChainImageViews;
 
     // window
     GLFWwindow *window;
